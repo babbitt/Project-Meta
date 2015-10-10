@@ -25,7 +25,7 @@
 				var trelloLink = document.getElementById("trello").value;
 				var projectdescription = document.getElementById("description").value;
 				var myDataRef = new Firebase("https://themetaproject.firebaseio.com");
-				var x = myDataRef.push({name:projectName,github:githubLink,slack:slackLink,trello:trelloLink,description:projectdescription, Events: {Event0{date: "", stamp "", content "", notes ""} {Event1{date: "", stamp "", content "", notes ""}}}).key(); 
+				var x = myDataRef.push({name:projectName,github:githubLink,slack:slackLink,trello:trelloLink,description:projectdescription, Events:{Event0:{date:"", stamp:"", content:"", notes:""},Event1:{date:"", stamp:"", content:"", notes:""}}}).key(); 
 				console.log(x); 	
 				var address = "https://mlh.joebabbitt.com/timeline?id=";
 				var newlink = address + x;
