@@ -7,6 +7,7 @@ var ref = new Firebase('https://themetaproject.firebaseio.com');
 	//element.appendChild(para);
 
 ref.on("value", function(snapshot) {
+	document.getElementById("timeline").innerHTML = "";
 	var wholeval = snapshot.val();
 	  var url= window.location.href;
       var projectname =url.slice(url.indexOf('id=')+3);
