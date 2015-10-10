@@ -1,5 +1,6 @@
 var ref = new Firebase('https://themetaproject.firebaseio.com');
 var eventnum = 0;
+var z = 0;
 function addevent(eventnum, projectname) {
 	var newtimelinenode =  "<li id="+ Event + eventnum +" class='tl-node'>\
 			<div class='tl-stamp'> A Date </div>\
@@ -28,8 +29,16 @@ ref.on("value", function(snapshot) {
 	
   var name = snapshot.child(projectname + '/name').val();
   var events = snapshot.child(projectname +'/Events').val();
-  var eventnum = events.eventnum;
-  console.log(eventnum)
+  var githublink = snapshot.child(projectname + "/github").val();
+  var trellolink = snapshot.child(projectname + "/trello").val();
+  var slacklink = snapshot.child(projectname + "/slack").val();
+  if (z = 1) { 
+  document.getElementById("links").innerHTML = "";
+  }
+  var links = '<div id="links"><a href="'+ githublink +'" style="margin-right: 50px;">The Git</a> <a href="'+ trellolink +'" style="margin-right: 50px;">Trello</a><a href="'+ slacklink +'">Slack</a></div>';
+  document.getElementById("links").innerHTML = links;
+
+  var z = z + 1;
    for (var key in events) {
    	var obj = events[key];
    	var Stamp = obj.Stamp;
@@ -66,6 +75,16 @@ ref.on("child_added", function(snapshot) {
 	
   var name = snapshot.child(projectname + '/name').val();
   var events = snapshot.child(projectname +'/Events').val();
+  var githublink = snapshot.child(projectname + "/github").val();
+  var trellolink = snapshot.child(projectname + "/trello").val();
+  var slacklink = snapshot.child(projectname + "/slack").val();
+ if (z = 1){ 
+  document.getElementById("links").innerHTML = "";
+} 
+  var links = '<div id="links"><a href="'+ githublink +'" style="margin-right: 50px;">The Git</a> <a href="'+ trellolink +'" style="margin-right: 50px;">Trello</a><a href="'+ slacklink +'">Slack</a></div>';
+  document.getElementById("links").innerHTML = links;
+
+  var z = z + 1;
    for (var key in events) {
    	var obj = events[key];
    	var Stamp = obj.Stamp;
@@ -78,6 +97,7 @@ ref.on("child_added", function(snapshot) {
    	console.log(Stamp, content, date);
    	var timelinenode = "<li class='tl-node'>\
 			<div class='tl-stamp'>"+ Stamp +" </div>\
+			<div class='tl-stamp'>"+ date +" </div>\
 			<div class='tl-content'>"+ content +"</div>\
 			<div id='" + name + "' class='tl-stamp notes'>"+ notes +" </div>\
 		</li>"
