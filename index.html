@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--[if IE 7 ]>    <html lang="cs" class="ie7 no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="cs" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="cs" class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="cs" class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8" />
+		<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+		<title>GiveAway</title>
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="./css/style.css?v=1" media="screen, projection" />
+		<link rel="stylesheet" href="./css/print.css?v=1" media="print" />
+		<link rel="shortcut icon" href="./favicon.ico" />
+		<script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script type = "text/javascript">
+			
+			function buttonClick(){
+				var projectName = document.getElementById("name").value;
+				var githubLink = document.getElementById("github").value;
+				var slackLink = document.getElementById("slack").value;
+				var trelloLink = document.getElementById("trello").value;
+				var myDataRef = new Firebase("https://themetaproject.firebaseio.com");
+				var x = myDataRef.push({name:projectName,github:githubLink,slack:slackLink,trello:trelloLink}).key(); 
+				console.log(x); 	
+				var address = "https://mlh.joebabbitt.com/timeline?id=";
+				var newlink = address + x;
+				console.log(newlink);	
+			}
+		</script>
+		<style>
+		div.relative {
+			position: absolute;
+			left:-250px;
+			top:400px;
+		}
+		</style>
+	</head>
+	<body class="page-subpage">
+		<div id="main">
+			<div class="row-main">
+				<div class="col col-book">
+					<a href="#"><img src="./img/book.png" alt="book" /></a>
+					
+				</div>
+				<div class = "relative">
+					<ul>
+						<p class = "whyuse">- Increase Efficiency</p>
+						<p class = "whyuse">- Manage Your Project</p>
+						<p class = "whyuse">- Divide the Work</p>
+					</ul>
+				</div>
+				<div class="col col-content">
+					<div class="in">
+						<p class="read-this">Just a Few Simple Steps</p>
+						<h1>Create a Personalized Website</h1>
+						<form action="#" method="post">
+							<div class="row with-info-text">
+								<label for="name" class="label">Enter your Project Name here</label>
+								<p class="inp-row">
+									<span class="inp-fix"><input type="text" class="inp-text" name="name" id="name" placeholder="Enter your Project Name here" /></span>
+								</p>
+							</div>
+							<div>
+								<label for="mail" class="label">Github Repository</label>
+								<p class="inp-row">
+									<span class="inp-fix"><input type="text" class="inp-text" name="mail" id="github" placeholder="Github Repository" /></span>
+								</p>
+							</div>
+							<div>
+								<label for="mail" class="label">Slack Site</label> 
+								<p class="inp-row">
+									<span class="inp-fix"><input type="text" class="inp-text" name="mail" id="slack" placeholder="Enter your Slack Site here" /></span>
+								</p>
+							</div>
+							<div>
+								<label for="mail" class="label">Trello Profile</label>
+								<p class="inp-row">
+									<span class="inp-fix"><input type="text" class="inp-text" name="mail" id="trello" placeholder="Enter your Trello Profile here" /></span>
+								</p>
+							</div>
+							
+							<div class="row">
+								<p class="buttons">
+									<button class="btn" type ="button" onclick = "buttonClick()"><span>Submit</span></button>
+								</p>
+							</div>
+						</form>
+						<p class="secure">Your Information is 100% Secure And Will Never Be Shared With Anyone.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<footer>
+			<center><a href="#"><img src="./img/footer.png" alt="footer" /></a></center>
+		</footer>
+		<!--[if lte IE 8 ]>
+			<img src="./img/bg.jpg" alt="" class="bg-ie" />
+		<![endif]-->
+
+		<script src="./js/jquery.js?v=1"></script>
+		<script src="./js/app.js?v=1"></script>
+		<script>
+			App.run({})
+		</script>
+	</body>
+</html>
+
+
