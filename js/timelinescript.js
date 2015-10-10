@@ -1,10 +1,24 @@
 var ref = new Firebase('https://themetaproject.firebaseio.com');
+var eventnum = 0;
+function addevent(eventnum, projectname) {
+	var newtimelinenode =  "<li id="+ Event + eventnum +" class='tl-node'>\
+			<div class='tl-stamp'> A Date </div>\
+			<div class='tl-stamp'> A Time </div>\
+			<div class='tl-content'> A Title</div>\
+			<div id='" + name + "' class='tl-stamp notes'> Some Notes </div>\
+		</li>"
+		eventnum = eventnum + 1;
+		$('#timeline').append(newtimelinenode);
+		document.getElementById("timeline").contentEditable = true;
+		console.log(eventnum);
+		var eventnumref = ref.child(projectname + '/Eventnum');
+		eventnumref.update({
+  		"Eventnum": eventnum
+		});
+}
+function upload() {
 
-	//var para = document.createElement("p");
-	//var node = document.createTextNode("This is new.");
-	//para.appendChild(node);
-	//var element = document.getElementById("div1");
-	//element.appendChild(para);
+}
 
 ref.on("value", function(snapshot) {
 	document.getElementById("timeline").innerHTML = "";
@@ -14,6 +28,8 @@ ref.on("value", function(snapshot) {
 	
   var name = snapshot.child(projectname + '/name').val();
   var events = snapshot.child(projectname +'/Events').val();
+  var eventnum = events.eventnum;
+  console.log(eventnum)
    for (var key in events) {
    	var obj = events[key];
    	var Stamp = obj.Stamp;
@@ -26,6 +42,7 @@ ref.on("value", function(snapshot) {
    	console.log(Stamp, content, date);
    	var timelinenode = "<li class='tl-node'>\
 			<div class='tl-stamp'>"+ Stamp +" </div>\
+			<div class='tl-stamp'>"+ date +" </div>\
 			<div class='tl-content'>"+ content +"</div>\
 			<div id='" + name + "' class='tl-stamp notes'>"+ notes +" </div>\
 		</li>"
