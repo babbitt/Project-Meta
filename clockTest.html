@@ -53,6 +53,7 @@
 				var minutes = numTime.substring(colonInd+1,numTime.length);
 				var AM = $('#chooseAM').val();
 				if (AM == 'PM'){
+					hour = parseInt(hour);
 					hour+=12
 				}
 				var hackEndTime = toSeconds(year, month, day, hour, minutes, 0);
