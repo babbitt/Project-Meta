@@ -8,9 +8,69 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">		
 	<script type="text/javascript" src="js/timelinescript.js"></script>
+	<link rel="stylesheet" href="libs/FlipClock/flipclock.css">
+		<script src="libs/FlipClock/flipclock.min.js"></script>
 </head>
 <body>
+	<script>
+		var clock;
+		var date;
+		var clockTime;
+		$(document).ready(function() {
+			$('#datepicker').datepicker();
+			function toSeconds(year, months, days, hours, minutes, secs){
+				//convert hours, minutes, and seconds to all seconds for the FlipClock
+				return secs + minutes*60 + hours*3600 + days*86400 + months*2592000 + year*31556952;
+			}
+			clock = $('.clock').FlipClock(clockTime, {
+		        clockFace: 'HourCounter',
+		        countdown: true,
+		        autoStart: false,
+		        callbacks: {
+		        	start: function() {
+		        		$('.message').html('The clock has started!');
+		        	}
+		        }
+		    });
+
+		    $('.start').click(function(e) {
+				date = $('#datepicker').datepicker('getDate');
+				date = $.datepicker.formatDate('yy mm dd', date);
+				console.log(date);
+				
+				var dateInfo = date.split(' ');
+				var year = dateInfo[0];
+				year = year - 1970 //convert it to the unix timestamp
+				var month = dateInfo[1];
+				var day = dateInfo[2];
+				var numTime = $('#numTime').val();
+				var colonInd = numTime.indexOf(':');
+				var hour = numTime.substring(0,colonInd);
+				var minutes = numTime.substring(colonInd+1,numTime.length);
+				var AM = $('#chooseAM').val();
+				if (AM == 'PM'){
+					hour = parseInt(hour);
+					hour+=12
+				}
+				var hackEndTime = toSeconds(year, month, day, hour, minutes, 0);
+				console.log(hackEndTime);
+				var currentTime = new Date();
+				console.log('print');
+				console.log(year, month, day, hour, minutes, 0);
+				console.log(currentTime.getFullYear()-1970,currentTime.getMonth()+1,currentTime.getDate(),currentTime.getHours()+1,currentTime.getMinutes(),currentTime.getSeconds());
+				var curSecs = toSeconds(currentTime.getFullYear()-1970,currentTime.getMonth()+1,currentTime.getDate(),currentTime.getHours()+1,currentTime.getMinutes(),currentTime.getSeconds());
+				console.log(curSecs);
+				clockTime = hackEndTime - curSecs;
+				console.log(clockTime);
+				clock.setTime(clockTime);
+		    	clock.start();
+		    });
+		});
+	</script>
 	<h1 id="titleprj" class="title"><span id="title">[Project Name]</span> Project Timeline <div id="links"></div> </h1>
 	<button class="pure-button" onclick="addevent()" id='add'>Add Event</button>
 	<button class="pure-button" onclick="upload()" id='add'>Update List</button>
@@ -20,5 +80,20 @@
 			<div class="tl-content">Initial contact</div>
 		</li>
 	</ol>
+<div class="clock" style="margin:2em;"></div>
+	<div class="message"></div>
+
+	<button class="start">Start Clock</button>
+	<h3>When does the hackathon end?</h3>
+	<div id="datepicker"></div>
+	<div id = "endTime">
+		<p> Enter the end time of the hackathon in the format hh:ss (for example, 09:22)</p>
+		<input type = "text" value = '' placeholder = 'End time' width = '100' id = 'numTime'></input>
+		<select id = 'chooseAM'>
+			<option value = 'AM'>AM</option>
+			<option value = 'PM'>PM</option>
+		</select>
+	</div>
+	<p id = "displayDate"></p>
 </body>
 </html>
