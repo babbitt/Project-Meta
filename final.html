@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Landing Page - Start Bootstrap Theme</title>
+    <title></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +34,8 @@
 	<link rel="stylesheet" href="libs/FlipClock/flipclock.css">
 	<script src="libs/FlipClock/flipclock.min.js"></script>
 	<script> 
+    var url= window.location.href;
+      var projectname =url.slice(url.indexOf('id=')+3);
 	$(document).ready(function() {
 		clock = $('.clock').FlipClock(50, {
 		        clockFace: 'HourCounter',
@@ -46,13 +48,15 @@
 		        }
 		    });
 		});
-		var myDataRef = new Firebase("https://themetaproject.firebaseio.com");
+		var myDataRef = new Firebase("https://themetaproject.firebaseio.com/"+ projectname);
 		myDataRef.on("value",function(snapshot){
-			document.getElementById("projectname").textContent = snapshot.name;
-			document.getElementById("github").textContent = snapshot.github;
-			document.getElementById("slack").textContent = snapshot.slack;
-			document.getElementById("trello").textContent = snapshot.trello;
-			document.getElementById("description").textContent = snapshot.description;
+            var varx = snapshot.child('/name').val();
+            document.getElementById("projectname").textContent = varx;
+            console.log(varx);
+			document.getElementById("github").textContent = snapshot.child('/github').val();;
+			document.getElementById("slack").textContent = snapshot.child('/slack').val();;
+			document.getElementById("trello").textContent = snapshot.child('/trello').val();;
+			document.getElementById("description").textContent = snapshot.child('/description').val();;
 		});
 	</script>
 </head>
@@ -70,7 +74,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">Start Bootstrap</a>
+                <a class="navbar-brand topnav" href="#">The Landing Page</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -102,7 +106,7 @@
                     <div class="intro-message">
                         <h1 id = "projectname">Project Meta</h1>
 						<u><h3>GitHub </h3></u>
-                        <h3 id = "github">A Custom, Personalized Website Just For You</h3>
+                        </script><h3 id = "github">A Custom, Personalized Website Just For You</h3>
                         <hr class="intro-divider">
                     </div>
                 </div>
